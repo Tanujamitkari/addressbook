@@ -4,12 +4,13 @@ pipeline {
     parameters{
         string(name:'Env',defaultValue:'Test',description:'Env to deploy')
         booleanParam(name:'executeTests',defaultValue:true,description:'decide to run tc')
+        choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
     }
 
     stages {
         stage('compile') {
             steps {
-                echo 'compile the code'
+                echo "compile the code ${params.APPVERSION}"
             }
         }
         stage('unit test') {
