@@ -30,7 +30,7 @@ pipeline {
         }
         stage('Deploy') {
             input{
-                mesage: "provide approval for prod"
+                message: "provide approval for prod"
                 ok "Deploy to prod"
                 parameters{
                     booleanParam(name:'DEPLOYTOPROD',defaultValue:false,description:'decide to deploy on prod')
