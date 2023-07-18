@@ -28,5 +28,15 @@ pipeline {
                 echo "package the code in env:${params.Env}"
             }
         }
+        stage('Deploy') {
+            input{
+                mesage: "provide approval for prod"
+                ok "Deploy to prod"
+                parameters{
+                    booleanParam(name:'DEPLOYTOPROD',defaultValue:false,description:'decide to deploy on prod')
+                }
+            }
+            steps {
+                echo "package the code in env:${params.Env}"
     }
 }
