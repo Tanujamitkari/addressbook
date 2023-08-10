@@ -37,6 +37,8 @@ pipeline {
                     //on slave2
                     steps {
                         sshagent(['build-server-key']) {
+                            withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+}
                         
                             echo "package the code"
                             //sh 'mvn package'
@@ -44,7 +46,8 @@ pipeline {
                             sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER_IP} bash ~ec2-user/server-script.sh"
                             sh "ssh ${BUILD_SERVER_IP} sudo docker build -t ${IMAGE_NAME} /home/ec2-user/addressbook"
                             sh "ssh ${BUILD_SERVER_IP} sudo docker login -u tanuja02 -p pwd"
-
+                            sh "ssh ${BUILD_SERVER_IP} sudo docker push ${IMAGE_NAME}"
+                        }
 
                         }
                     }
